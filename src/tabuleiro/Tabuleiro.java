@@ -35,4 +35,9 @@ public class Tabuleiro {
 		return pieces[position.getFileira()][position.getColuna()];
 	}
 	
+	public void placePiece(Piece piece, Position position) {
+		this.pieces[position.getFileira()][position.getColuna()] = piece;
+		piece.position = position;
+	}
+	
 }
