@@ -1,6 +1,5 @@
 package xadrez;
 
-import tabuleiro.Position;
 import tabuleiro.Tabuleiro;
 import xadrez.pieces.Rei;
 import xadrez.pieces.Torre;
@@ -14,8 +13,8 @@ public class PartidaXadrez {
 	}
 	
 	public PieceXadrez[][] getPieces(){
-		PieceXadrez[][] partida = new PieceXadrez[tabuleiro.getFileiras()][tabuleiro.getColunas()];
-		for(int i=0; i<tabuleiro.getFileiras(); i++) {
+		PieceXadrez[][] partida = new PieceXadrez[tabuleiro.getLinhas()][tabuleiro.getColunas()];
+		for(int i=0; i<tabuleiro.getLinhas(); i++) {
 			for(int j=0; j<tabuleiro.getColunas(); j++) {
 				partida[i][j] = (PieceXadrez) tabuleiro.piece(i, j);
 			}
@@ -23,8 +22,12 @@ public class PartidaXadrez {
 		return partida;
 	}
 	
+	private void novaPosicaoPiece(char coluna, int linha, PieceXadrez piece) {
+		tabuleiro.placePiece(piece, new XadrezPosition(coluna, linha).toPosition());
+	}
+	
 	private void setupInicial() {
-		tabuleiro.placePiece(new Torre(tabuleiro, Cor.BRANCO), new Position(2, 1));
-		tabuleiro.placePiece(new Rei(tabuleiro, Cor.PRETO), new Position(2, 5));
+		novaPosicaoPiece('b', 6, new Torre(tabuleiro, Cor.BRANCO));
+		novaPosicaoPiece('e', 8, new Rei(tabuleiro, Cor.PRETO));
 	}
 }
