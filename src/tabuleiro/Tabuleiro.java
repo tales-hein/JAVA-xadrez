@@ -25,24 +25,37 @@ public class Tabuleiro {
 
 	public Piece piece(int linha, int coluna) {
 		if(!posicaoExists(linha, coluna)) {
-			throw new TabuleiroException("Posição fora do tabuleiro");
+			throw new TabuleiroException("Posicao fora do tabuleiro");
 		}
 		return pieces[linha][coluna];
 	}
 	
 	public Piece piece(Position position) {
 		if(!posicaoExists(position)) {
-			throw new TabuleiroException("Posição fora do tabuleiro");
+			throw new TabuleiroException("Posicao fora do tabuleiro");
 		}
 		return pieces[position.getLinha()][position.getColuna()];
 	}
 	
 	public void placePiece(Piece piece, Position position) {
 		if(thereIsPiece(position)) {
-			throw new TabuleiroException("Há uma peça na posição " + position);
+			throw new TabuleiroException("Ha uma peça nessa posicao " + position);
 		}
 		this.pieces[position.getLinha()][position.getColuna()] = piece;
 		piece.position = position;
+	}
+	
+	public Piece removePiece(Position position) {
+		if(!posicaoExists(position)) {
+			throw new TabuleiroException("Posicao fora do tabuleiro");
+		}
+		if (piece(position) == null) {
+			return null;
+		}
+		Piece aux = piece(position);
+		aux.position = null;
+		pieces[position.getLinha()][position.getColuna()] = null;
+		return aux;
 	}
 	
 	public boolean posicaoExists(int linha, int coluna) {
@@ -55,7 +68,7 @@ public class Tabuleiro {
 	
 	public boolean thereIsPiece(Position position) {
 		if(!posicaoExists(position)) {
-			throw new TabuleiroException("Posição fora do tabuleiro");
+			throw new TabuleiroException("Posicao fora do tabuleiro");
 		}
 		return piece(position) != null;
 	}

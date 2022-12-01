@@ -1,5 +1,7 @@
 package xadrez;
 
+import tabuleiro.Piece;
+import tabuleiro.Position;
 import tabuleiro.Tabuleiro;
 import xadrez.pieces.Rei;
 import xadrez.pieces.Torre;
@@ -20,6 +22,27 @@ public class PartidaXadrez {
 			}
 		}
 		return partida;
+	}
+	
+	public PieceXadrez makeChessMove(XadrezPosition sourceP, XadrezPosition targetP) {
+		Position source = sourceP.toPosition();
+		Position target = targetP.toPosition();
+		validaSourcePosition(source);
+		Piece capPiece = movimento(source, target);
+		return (PieceXadrez) capPiece;
+	}
+	
+	private Piece movimento(Position source, Position target) {
+		Piece p = tabuleiro.removePiece(source);
+		Piece capPiece = tabuleiro.removePiece(target);
+		tabuleiro.placePiece(p, target);
+		return capPiece;
+	}
+	
+	private void validaSourcePosition(Position position) {
+		if(!tabuleiro.thereIsPiece(position)) {
+			throw new XadrezException("Nao ha peca na posicaoo de inicio da jogada");
+		}
 	}
 	
 	private void novaPosicaoPiece(char coluna, int linha, PieceXadrez piece) {
